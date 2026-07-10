@@ -1,0 +1,4 @@
+add_executable(nimbus_syncd src/main.cpp)
+target_include_directories(nimbus_syncd PUBLIC include)
+target_link_libraries(nimbus_syncd PRIVATE nimbus_common nimbus_client)
+nimbus_apply_compiler_settings(nimbus_syncd)

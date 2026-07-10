@@ -1,0 +1,6 @@
+add_executable(nimbus_tests placeholder_test.cpp)
+target_link_libraries(nimbus_tests PRIVATE GTest::gtest_main nimbus_common nimbus_client)
+nimbus_apply_compiler_settings(nimbus_tests)
+
+include(GoogleTest)
+gtest_discover_tests(nimbus_tests)

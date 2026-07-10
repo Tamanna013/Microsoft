@@ -1,0 +1,4 @@
+add_executable(metadata_service src/main.cpp)
+target_include_directories(metadata_service PUBLIC include)
+target_link_libraries(metadata_service PRIVATE nimbus_common)
+nimbus_apply_compiler_settings(metadata_service)

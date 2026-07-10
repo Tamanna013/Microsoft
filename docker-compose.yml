@@ -1,0 +1,12 @@
+version: '3.8'
+
+# This docker-compose file is an M0 smoke test demonstrating the full 
+# Docker build+run path works end-to-end even though the executable does nothing yet.
+# It will be expanded into the real multi-node cluster topology in M20.
+
+services:
+  nimbus-hello:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nimbusfs-hello:latest

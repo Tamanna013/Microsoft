@@ -1,0 +1,4 @@
+add_executable(coordinator src/main.cpp)
+target_include_directories(coordinator PUBLIC include)
+target_link_libraries(coordinator PRIVATE nimbus_common)
+nimbus_apply_compiler_settings(coordinator)

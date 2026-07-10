@@ -1,0 +1,11 @@
+# Temporary scaffold to prove gRPC toolchain works
+
+nimbus_add_proto_library(nimbus_greeter_proto PROTOS ${CMAKE_SOURCE_DIR}/proto/greeter/greeter.proto)
+
+add_executable(greeter_server greeter_server_main.cpp)
+target_link_libraries(greeter_server PRIVATE nimbus_common nimbus_greeter_proto)
+nimbus_apply_compiler_settings(greeter_server)
+
+add_executable(greeter_client greeter_client_main.cpp)
+target_link_libraries(greeter_client PRIVATE nimbus_common nimbus_greeter_proto)
+nimbus_apply_compiler_settings(greeter_client)

@@ -1,0 +1,4 @@
+add_executable(storage_node src/main.cpp)
+target_include_directories(storage_node PUBLIC include)
+target_link_libraries(storage_node PRIVATE nimbus_common)
+nimbus_apply_compiler_settings(storage_node)

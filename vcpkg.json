@@ -1,0 +1,15 @@
+{
+  "name": "nimbusfs",
+  "version": "0.1.0",
+  "builtin-baseline": "3d9943660bf1cb54de93b9cd41eb43ef5be5241b",
+  "dependencies": [
+    "grpc",
+    "protobuf",
+    "openssl",
+    "sqlite3",
+    "gtest",
+    "nlohmann-json",
+    "cli11",
+    "stduuid"
+  ]
+}

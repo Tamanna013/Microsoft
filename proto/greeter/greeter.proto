@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package nimbus.proto;
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloResponse);
+}
+
+message HelloRequest {
+  uint32 protocol_version = 1;
+  string name = 2;
+}
+
+message HelloResponse {
+  uint32 protocol_version = 1;
+  string message = 2;
+}

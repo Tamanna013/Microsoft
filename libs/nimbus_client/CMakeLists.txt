@@ -1,0 +1,4 @@
+add_library(nimbus_client STATIC src/client_stub.cpp)
+target_include_directories(nimbus_client PUBLIC include)
+target_link_libraries(nimbus_client PUBLIC nimbus_common)
+nimbus_apply_compiler_settings(nimbus_client)

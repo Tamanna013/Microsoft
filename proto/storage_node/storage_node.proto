@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package nimbus.proto.storage_node;
+
+service StorageNode {
+  rpc PutChunk (stream PutChunkRequest) returns (PutChunkResponse);
+  rpc GetChunk (GetChunkRequest) returns (stream GetChunkResponse);
+  rpc VerifyChunk (VerifyChunkRequest) returns (VerifyChunkResponse);
+  rpc DeleteChunk (DeleteChunkRequest) returns (DeleteChunkResponse);
+  rpc ReplicateChunk (ReplicateChunkRequest) returns (ReplicateChunkResponse);
+  rpc GetNodeStats (GetNodeStatsRequest) returns (GetNodeStatsResponse);
+}
+
+enum ChunkStatus {
+  OK = 0;
+  CHECKSUM_MISMATCH = 1;
+  CHUNK_TOO_LARGE = 2;
+  CAPABILITY_DENIED = 3;
+  IO_ERROR = 4;
+  NOT_FOUND = 5;
+  CORRUPTION_DETECTED = 6;
+  SOURCE_UNREACHABLE = 7;
+}
+
+message PutChunkRequest {
+  uint32 protocol_version = 1;
+  oneof payload {
+    PutChunkMetadata metadata = 2;
+    bytes data_chunk = 3;
+  }
+}
+
+message PutChunkMetadata {
+  string chunk_id = 1;
+  string capability_token = 2;
+  uint64 total_size_bytes = 3;
+}
+
+message PutChunkResponse {
+  uint32 protocol_version = 1;
+  ChunkStatus status = 2;
+  string message = 3;
+}
+
+message GetChunkRequest {
+  uint32 protocol_version = 1;
+  string chunk_id = 2;
+}
+
+message GetChunkResponse {
+  uint32 protocol_version = 1;
+  oneof payload {
+    GetChunkMetadata metadata = 2;
+    bytes data_chunk = 3;
+  }
+}
+
+message GetChunkMetadata {
+  uint64 total_size_bytes = 1;
+  ChunkStatus status = 2;
+}
+
+message VerifyChunkRequest {
+  uint32 protocol_version = 1;
+  string chunk_id = 2;
+}
+
+message VerifyChunkResponse {
+  uint32 protocol_version = 1;
+  bool is_valid = 2;
+  ChunkStatus status = 3;
+}
+
+message DeleteChunkRequest {
+  uint32 protocol_version = 1;
+  string chunk_id = 2;
+  string capability_token = 3;
+}
+
+message DeleteChunkResponse {
+  uint32 protocol_version = 1;
+  ChunkStatus status = 2;
+}
+
+message ReplicateChunkRequest {
+  uint32 protocol_version = 1;
+  string chunk_id = 2;
+  string source_node_address = 3;
+}
+
+message ReplicateChunkResponse {
+  uint32 protocol_version = 1;
+  ChunkStatus status = 2;
+}
+
+message GetNodeStatsRequest {
+  uint32 protocol_version = 1;
+}
+
+message GetNodeStatsResponse {
+  uint32 protocol_version = 1;
+  uint64 chunk_count = 2;
+  uint64 bytes_used = 3;
+  uint64 bytes_free = 4;
+}

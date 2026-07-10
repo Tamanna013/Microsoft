@@ -12,6 +12,8 @@ add_library(nimbus_common STATIC
     src/clock.cpp
     src/lease.cpp
     src/path_validator.cpp
+    src/protocol_version.cpp
+    src/uuid.cpp
 )
 target_include_directories(nimbus_common PUBLIC include)
 target_link_libraries(nimbus_common PUBLIC spdlog::spdlog nlohmann_json::nlohmann_json fmt::fmt OpenSSL::Crypto)

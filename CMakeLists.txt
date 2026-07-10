@@ -18,8 +18,6 @@ if(NIMBUS_BUILD_TESTS)
 endif()
 
 # Services
-add_subdirectory(services/greeter_demo)
-
 add_subdirectory(libs/common)
 add_subdirectory(libs/nimbus_client)
 add_subdirectory(services/metadata_service)

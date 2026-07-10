@@ -1,0 +1,3 @@
+add_executable(nimbus_integration_tests greeter_integration_test.cpp)
+target_link_libraries(nimbus_integration_tests PRIVATE nimbus_common nimbus_greeter_proto gRPC::grpc++ GTest::gtest_main)
+nimbus_apply_compiler_settings(nimbus_integration_tests)

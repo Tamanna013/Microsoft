@@ -1,12 +1,22 @@
 version: '3.8'
 
-# This docker-compose file is an M0 smoke test demonstrating the full 
-# Docker build+run path works end-to-end even though the executable does nothing yet.
-# It will be expanded into the real multi-node cluster topology in M20.
-
 services:
-  nimbus-hello:
+  storage-node-1:
     build:
       context: .
       dockerfile: Dockerfile
-    image: nimbusfs-hello:latest
+    image: nimbusfs-storage-node:latest
+    entrypoint: ["/usr/local/bin/storage_node"]
+    ports:
+      - "50051:50051"
+    volumes:
+      - nimbus_data_1:/var/lib/nimbusfs/data
+    healthcheck:
+      test: ["CMD", "/bin/grpc_health_probe", "-addr=localhost:50051"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  nimbus_data_1:

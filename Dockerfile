@@ -34,18 +34,13 @@ RUN cmake -B build/release -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN
 RUN cmake --build build/release
 
 # Stage 2: Runtime
-# We use a full ubuntu:22.04 base rather than 'scratch' or 'distroless'.
-# Rationale: Distroless images complicate debugging during a portfolio-project
-# demo where operability/visibility (e.g. exec'ing in to run curl or ls) matters
-# more than minimal image size.
 FROM ubuntu:22.04 AS runtime
 
-# Copy executables from builder
-# M0 uses a placeholder; later we will copy all services
-COPY --from=builder /src/build/release/services/storage_node/storage_node /usr/local/bin/storage_node
+RUN apt-get update && apt-get install -y wget && \
+    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.4.19/grpc_health_probe-linux-amd64 && \
+    chmod +x /bin/grpc_health_probe && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Add other components when they are built in later milestones
-# COPY --from=builder /src/build/release/services/metadata_service/metadata_service /usr/local/bin/
-# COPY --from=builder /src/build/release/services/coordinator/coordinator /usr/local/bin/
+COPY --from=builder /src/build/release/services/storage_node/storage_node /usr/local/bin/storage_node
 
 ENTRYPOINT ["/usr/local/bin/storage_node"]
